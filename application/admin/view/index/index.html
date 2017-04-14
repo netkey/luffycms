@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>后台管理平台</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/layui/css/global-iframe.css">
+    <link rel="stylesheet" type="text/css" href="/layui/css/iconfont/iconfont.css">
+    <link href="./favicon.ico" rel="shortcut icon">
+</head>
+
+<body>
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header header header-demo">
+            <div class="layui-main">
+                <a class="logo" href="/">
+                    
+                </a>
+                <div class="layui-form component">
+                    <select lay-search lay-filter="component">
+                        <option value="">搜索菜单</option>
+                        {volist name="list" id="vo"}
+                        {if condition="empty($vo['childrens'])"}
+                        <option value="{:url($vo['name'])}" data-rule-id="{$vo.id}">{$vo.title}</option>
+                        {else}
+                        <optgroup label="{$vo.title}">
+                            {volist name="vo['childrens']" id="v"}
+                            <option value="{:url($v['name'])}" data-rule-id="{$v.id}">{$v.title}</option>
+                            {/volist}
+                        </optgroup>
+                        {/if}
+                        {/volist}
+                    </select>
+                </div>
+                <ul class="layui-nav" pc>
+                    <li class="layui-nav-item ">
+                        <a href="#">文档</a>
+                    </li>
+                    <li class="layui-nav-item layui-this" pc>
+                        <a href="#" target="_blank">后台</a>
+                    </li>
+                    <li class="layui-nav-item" pc>
+                        <a href="#" target="_blank">社区</a>
+                    </li>
+                    <li class="layui-nav-item" pc>
+                        <a href="javascript:;">周边</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="#" target="_blank">即时聊天</a></dd>
+                            <dd><a href="#" target="_blank">社区模版</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item" mobile>
+                        <a href="javascript:;">更多</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="#" target="_blank">社区</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div><!-- 头部结束 -->
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree site-demo-nav">
+                    {volist name="list" id="vo"}
+                    {if condition="$key eq 0"}
+                    <li class="layui-nav-item layui-nav-itemed">
+                    {else}
+                    <li class="layui-nav-item">
+                    {/if}
+                        {if condition="empty($vo['childrens'])"}
+                        <a class="javascript:;" href="{:url($vo['name'])}" data-rule-id="{$vo.id}">{$vo.title}</a>
+                        {else}
+                        <a class="javascript:;" href="javascript:;" data-rule-id="{$vo.id}">{$vo.title}</a>
+                        <dl class="layui-nav-child">
+                        {volist name="vo['childrens']" id="children"}
+                            <dd class="">
+                                <a href="{:url($children['name'])}" data-rule-id="{$children.id}">
+                                    <cite>{$children.title}</cite>
+                                </a>
+                            </dd>
+                        {/volist}
+                        </dl>
+                        {/if}
+                    </li>
+                    {/volist}
+                    
+                    <li class="layui-nav-item" style="height: 30px; text-align: center"></li>
+                </ul>
+            </div>
+        </div><!-- 导航结束 -->
+        <div class="layui-tab layui-tab-brief" lay-filter="iframe" lay-allowclose="true">
+            <ul class="layui-tab-title site-demo-title">
+                
+            </ul>
+            <div class="layui-body layui-tab-content site-demo site-demo-body">
+                
+            </div>
+        </div><!-- 正文结束 -->
+        <div class="layui-footer footer footer-demo">
+            <div class="layui-main">
+                <p>&copy; 2017 <a href="/">book.com</a> MIT license</p>
+                <p>
+                    <a href="" target="_blank">案例</a>
+                    <a href="" target="_blank">捐赠</a>
+                    <a href="">联系</a>
+                    <a href="" target="_blank">Git仓库</a>
+                    <a href="" target="_blank">微信公众号</a>
+                </p>
+            </div>
+        </div><!-- 底部结束 -->
+        <div class="site-tree-mobile layui-hide">
+            <i class="layui-icon">&#xe602;</i>
+        </div>
+        <div class="site-mobile-shade"></div>
+        <script src="/layui/layui.js" charset="utf-8"></script>
+        <script>
+        layui.config({
+            base: '/layui/lay/my-modules/',
+            version: '1489724249329'
+        }).use('global');
+        </script>
+    </div>
+</body>
+
+</html>

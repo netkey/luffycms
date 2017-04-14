@@ -1,0 +1,61 @@
+    <div class="layui-form-item" style="margin-bottom: 0px;">
+        <div class="layui-input-inline layui-input-inline-right">
+            <a class="layui-btn layui-btn-primary" href="{:url('add')}"><i class="layui-icon">&#xe654;</i>添加</a>
+        </div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>菜单列表</legend>
+    </fieldset>
+
+    <table class="layui-table" lay-skin="line">
+        <colgroup>
+            <col>
+            <col width="200">
+            <col width="200">
+            <col width="200">
+            <col width="200">
+            <col width="200">
+        </colgroup>
+        <thead>
+            <tr>
+                <th>菜单名称</th>
+                <th>链接</th>
+                <th>ICON</th>
+                <th>类型</th>
+                <th>排序</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody class="layui-body-table" data-url="{:url('rule/index')}" data-elem=".layui-body-table">
+        </tbody>
+        <script type="text/html" class="layui-body-table-script">
+            {{#  layui.each(d.data, function(index, item){ }}
+                <tr>
+                    <td>{{ str_repeat('--',item.level) }} {{ item.title }}</td>
+                    <td>{{ item.name }}</td>
+                    <td><span class="{{ item.icon }}"></span></td>
+                    <td>
+                        {{# if(item.islink == 1){ }}
+                            菜单
+                        {{# }else{ }}
+                            操作
+                        {{# } }}
+                    </td>
+                    <td>{{ item.sort }}</td>
+                    <td>
+                        <a href="/admin/rule/edit/id/{{ item.id }}.html">
+                            <i class="layui-icon">&#xe642;</i>
+                        </a>
+                    </td>
+                </tr>
+            {{# }); }}
+        </script>
+    </table>
+    <div lay-page></div>
+
+
+    <script type="text/javascript">
+        function str_repeat(str, num){ 
+            return new Array( num + 1 ).join( str ); 
+        }
+    </script>
