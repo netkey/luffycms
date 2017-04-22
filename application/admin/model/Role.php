@@ -8,7 +8,6 @@ use think\Model;
 class Role extends Model
 {
     protected $updateTime = 'modify_time';
-
     /**
      * 关联角色
      * @method   role

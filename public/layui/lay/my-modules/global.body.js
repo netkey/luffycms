@@ -72,9 +72,9 @@ layui.define(['layer', 'code', 'form', 'element', 'util', 'laytpl', 'laypage', '
                 // 失败不跳转
                 layer.msg($data.msg, { icon: 5 });
 
-                window.setTimeout(function(){
-                    window.location.href = $data.url;
-                },$data.wait*1000);
+                // window.setTimeout(function(){
+                    // window.location.href = $data.url;
+                // },$data.wait*1000);
             } else if ($data.code == 1) {
                 // 成功跳转
                 layer.msg($data.msg, { icon: 1 });

@@ -224,3 +224,34 @@ td[colspan]{
     text-decoration: none;
     font-size: 11px;
 }
+.space-300{
+    max-width: 300px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.space-400{
+    max-width: 400px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.space-500{
+    max-width: 500px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.space-600{
+    max-width: 600px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.space-700{
+    max-width: 700px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+

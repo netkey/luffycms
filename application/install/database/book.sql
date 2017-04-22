@@ -4,16 +4,86 @@ Navicat MySQL Data Transfer
 Source Server         : 本地
 Source Server Version : 50716
 Source Host           : localhost:3306
-Source Database       : book
+Source Database       : luffycms
 
 Target Server Type    : MYSQL
 Target Server Version : 50716
 File Encoding         : 65001
 
-Date: 2017-04-17 17:10:12
+Date: 2017-04-22 16:31:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for category
+-- ----------------------------
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT '上级分类',
+  `name` varchar(50) NOT NULL COMMENT '分类名称',
+  `en_name` varchar(20) NOT NULL COMMENT '分类英文名称（用于前台url）',
+  `path` varchar(20) DEFAULT NULL COMMENT '分类路径;格式： parent_ids,id,',
+  `title` varchar(255) DEFAULT NULL COMMENT '前台显示的分类标题',
+  `keywords` varchar(255) DEFAULT NULL COMMENT '前台显示的分类关键字',
+  `description` varchar(255) DEFAULT NULL COMMENT '前台显示的分类描述',
+  `sort` int(3) NOT NULL DEFAULT '0' COMMENT '分类排序',
+  `level` tinyint(2) NOT NULL DEFAULT '1' COMMENT '分类深度',
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `category_name` (`en_name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='商品分类';
+
+-- ----------------------------
+-- Records of category
+-- ----------------------------
+INSERT INTO `category` VALUES ('6', '0', '上衣', 'jacket', '6,', '', '', '', '1', '1', '2017-04-22 13:56:53', '2017-04-22 15:24:24');
+INSERT INTO `category` VALUES ('7', '6', '外套', 'coat', '6,7,', '', '', '', '1', '2', '2017-04-22 13:58:00', '2017-04-22 15:25:52');
+INSERT INTO `category` VALUES ('9', '7', '牛仔外套', 'niuza', '6,7,9,', '', '', '', '1', '3', '2017-04-22 16:02:21', '2017-04-22 16:02:29');
+
+-- ----------------------------
+-- Table structure for former
+-- ----------------------------
+DROP TABLE IF EXISTS `former`;
+CREATE TABLE `former` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL COMMENT '模型名称:红色',
+  `spec` varchar(255) NOT NULL COMMENT '模型规格：白色,红色,蓝色',
+  `create_time` datetime NOT NULL,
+  `modify_time` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `former_name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='商品模型表';
+
+-- ----------------------------
+-- Records of former
+-- ----------------------------
+INSERT INTO `former` VALUES ('3', '颜色', '红色,蓝色,白色', '2017-04-22 11:32:04', '2017-04-22 11:32:04');
+INSERT INTO `former` VALUES ('4', '尺寸', '大码,中码,小码', '2017-04-22 11:32:43', '2017-04-22 11:32:43');
+INSERT INTO `former` VALUES ('5', '长度', '3M,5M,6M', '2017-04-22 15:58:33', '2017-04-22 15:59:17');
+
+-- ----------------------------
+-- Table structure for goods
+-- ----------------------------
+DROP TABLE IF EXISTS `goods`;
+CREATE TABLE `goods` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_id` int(11) NOT NULL COMMENT '商品分类',
+  `category_path` varchar(50) NOT NULL COMMENT '分类路径',
+  `name` varchar(255) NOT NULL COMMENT '商品名称',
+  `title` varchar(255) DEFAULT NULL COMMENT '前台显示的商品标题',
+  `keywords` varchar(255) DEFAULT NULL COMMENT '前台显示的商品关键词',
+  `description` varchar(255) DEFAULT NULL COMMENT '前台显示的商品描述',
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品表';
+
+-- ----------------------------
+-- Records of goods
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for handle_log
@@ -28,7 +98,7 @@ CREATE TABLE `handle_log` (
   `create_time` datetime DEFAULT NULL,
   `modify_time` datetime DEFAULT NULL COMMENT '日志表',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COMMENT='操作日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8 COMMENT='操作日志表';
 
 -- ----------------------------
 -- Records of handle_log
@@ -72,6 +142,53 @@ INSERT INTO `handle_log` VALUES ('36', '1', 'index/login', '用户登录', '{\"d
 INSERT INTO `handle_log` VALUES ('37', '1', 'index/logout', '退出登录', '[]', '2017-04-14 17:46:39', '2017-04-14 17:46:39');
 INSERT INTO `handle_log` VALUES ('38', '1', 'index/login', '用户登录', '{\"data\":{\"email\":\"admin@admin.com\",\"password\":\"1234567\",\"captcha\":\"ax7c\"}}', '2017-04-14 17:47:06', '2017-04-14 17:47:06');
 INSERT INTO `handle_log` VALUES ('39', '1', 'index/login', '用户登录', '{\"data\":{\"email\":\"admin@admin.com\",\"password\":\"1234567\",\"captcha\":\"ece5\"}}', '2017-04-14 17:48:07', '2017-04-14 17:48:07');
+INSERT INTO `handle_log` VALUES ('40', '1', 'rule/add', '权限菜单添加[id:19]', '{\"data\":{\"parent_id\":\"0\",\"title\":\"\\u7cfb\\u7edf\\u8bbe\\u7f6e\",\"name\":\"system\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"1\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-17 17:41:00', '2017-04-17 17:41:00');
+INSERT INTO `handle_log` VALUES ('41', '1', 'rule/edit', '修改权限菜单[id:19]', '{\"data\":{\"parent_id\":\"0\",\"title\":\"\\u7cfb\\u7edf\\u8bbe\\u7f6e\",\"name\":\"system\",\"icon\":\"\",\"sort\":\"6\",\"islink\":\"1\",\"isadmin\":\"\",\"isverify\":\"1\"},\"id\":\"19\"}', '2017-04-17 17:42:38', '2017-04-17 17:42:38');
+INSERT INTO `handle_log` VALUES ('42', '1', 'rule/add', '权限菜单添加[id:20]', '{\"data\":{\"parent_id\":\"19\",\"title\":\"\\u524d\\u53f0\\u5bfc\\u822a\",\"name\":\"system\\/navigation\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"1\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-17 17:43:40', '2017-04-17 17:43:40');
+INSERT INTO `handle_log` VALUES ('43', '1', 'index/login', '用户登录', '{\"data\":{\"email\":\"admin@admin.com\",\"password\":\"1234567\",\"captcha\":\"m6du\"}}', '2017-04-22 10:12:10', '2017-04-22 10:12:10');
+INSERT INTO `handle_log` VALUES ('44', '1', 'rule/add', '权限菜单添加[id:21]', '{\"data\":{\"parent_id\":\"0\",\"title\":\"\\u5546\\u54c1\\u7ba1\\u7406\",\"name\":\"goods\",\"icon\":\"fa fa-cubes\",\"sort\":\"255\",\"islink\":\"1\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-22 10:15:08', '2017-04-22 10:15:08');
+INSERT INTO `handle_log` VALUES ('45', '1', 'rule/edit', '修改权限菜单[id:21]', '{\"data\":{\"parent_id\":\"0\",\"title\":\"\\u5546\\u54c1\\u7ba1\\u7406\",\"name\":\"goods\",\"icon\":\"fa fa-cubes\",\"sort\":\"2\",\"islink\":\"1\",\"isadmin\":\"\",\"isverify\":\"1\"},\"id\":\"21\"}', '2017-04-22 10:15:40', '2017-04-22 10:15:40');
+INSERT INTO `handle_log` VALUES ('46', '1', 'rule/add', '权限菜单添加[id:22]', '{\"data\":{\"parent_id\":\"21\",\"title\":\"\\u5546\\u54c1\\u5217\\u8868\",\"name\":\"goods\\/index\",\"icon\":\"\",\"sort\":\"1\",\"islink\":\"1\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-22 10:16:41', '2017-04-22 10:16:41');
+INSERT INTO `handle_log` VALUES ('47', '1', 'rule/add', '权限菜单添加[id:23]', '{\"data\":{\"parent_id\":\"21\",\"title\":\"\\u5546\\u54c1\\u5206\\u7c7b\",\"name\":\"category\\/index\",\"icon\":\"\",\"sort\":\"2\",\"islink\":\"1\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-22 10:18:01', '2017-04-22 10:18:01');
+INSERT INTO `handle_log` VALUES ('48', '1', 'rule/add', '权限菜单添加[id:24]', '{\"data\":{\"parent_id\":\"22\",\"title\":\"\\u6dfb\\u52a0\\u5546\\u54c1\",\"name\":\"goods\\/add\",\"icon\":\"\",\"sort\":\"1\",\"islink\":\"\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-22 10:18:38', '2017-04-22 10:18:38');
+INSERT INTO `handle_log` VALUES ('49', '1', 'rule/add', '权限菜单添加[id:25]', '{\"data\":{\"parent_id\":\"22\",\"title\":\"\\u4fee\\u6539\\u5546\\u54c1\",\"name\":\"goods\\/edit\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-22 10:19:02', '2017-04-22 10:19:02');
+INSERT INTO `handle_log` VALUES ('50', '1', 'rule/add', '权限菜单添加[id:26]', '{\"data\":{\"parent_id\":\"22\",\"title\":\"\\u5220\\u9664\\u5546\\u54c1\",\"name\":\"goods\\/destroy\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-22 10:19:51', '2017-04-22 10:19:51');
+INSERT INTO `handle_log` VALUES ('51', '1', 'rule/add', '权限菜单添加[id:27]', '{\"data\":{\"parent_id\":\"23\",\"title\":\"\\u6dfb\\u52a0\\u5206\\u7c7b\",\"name\":\"category\\/add\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-22 10:21:23', '2017-04-22 10:21:23');
+INSERT INTO `handle_log` VALUES ('52', '1', 'rule/add', '权限菜单添加[id:28]', '{\"data\":{\"parent_id\":\"23\",\"title\":\"\\u4fee\\u6539\\u5206\\u7c7b\",\"name\":\"category\\/edit\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-22 10:21:46', '2017-04-22 10:21:46');
+INSERT INTO `handle_log` VALUES ('53', '1', 'rule/add', '权限菜单添加[id:29]', '{\"data\":{\"parent_id\":\"23\",\"title\":\"\\u5220\\u9664\\u5206\\u7c7b\",\"name\":\"category\\/destroy\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-22 10:22:29', '2017-04-22 10:22:29');
+INSERT INTO `handle_log` VALUES ('54', '1', 'rule/add', '权限菜单添加[id:30]', '{\"data\":{\"parent_id\":\"21\",\"title\":\"\\u5546\\u54c1\\u6a21\\u578b\",\"name\":\"former\\/index\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"1\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-22 10:24:13', '2017-04-22 10:24:13');
+INSERT INTO `handle_log` VALUES ('55', '1', 'rule/add', '权限菜单添加[id:31]', '{\"data\":{\"parent_id\":\"30\",\"title\":\"\\u6dfb\\u52a0\\u6a21\\u578b\",\"name\":\"former\\/add\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-22 10:24:57', '2017-04-22 10:24:57');
+INSERT INTO `handle_log` VALUES ('56', '1', 'rule/add', '权限菜单添加[id:32]', '{\"data\":{\"parent_id\":\"30\",\"title\":\"\\u4fee\\u6539\\u6a21\\u578b\",\"name\":\"former\\/edit\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-22 10:25:16', '2017-04-22 10:25:16');
+INSERT INTO `handle_log` VALUES ('57', '1', 'former/add', '添加商品模型[id:1]', '{\"data\":{\"name\":\"\\u989c\\u8272\",\"spec\":\"\\u7ea2\\u8272,\\u767d\\u8272,\\u84dd\\u8272,\\u5361\\u5176\\u8272,\\u5929\\u84dd\\u8272\"}}', '2017-04-22 11:09:59', '2017-04-22 11:09:59');
+INSERT INTO `handle_log` VALUES ('58', '1', 'former/edit', '修改商品模型[id:1]', '{\"data\":{\"name\":\"\\u989c\\u8272\",\"spec\":\"\\u7ea2\\u8272,\\u767d\\u8272,\\u84dd\\u8272,\\u5361\\u5176\\u8272,\\u5929\\u84dd\\u8272,\\u7eff\\u8272\"},\"id\":\"1\"}', '2017-04-22 11:21:47', '2017-04-22 11:21:47');
+INSERT INTO `handle_log` VALUES ('59', '1', 'rule/add', '权限菜单添加[id:33]', '{\"data\":{\"parent_id\":\"30\",\"title\":\"\\u6a21\\u578b\\u5220\\u9664\",\"name\":\"former\\/destroy\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"1\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-22 11:29:00', '2017-04-22 11:29:00');
+INSERT INTO `handle_log` VALUES ('60', '1', 'former/destroy', '删除商品模型[id:1]', '{\"id\":\"1\"}', '2017-04-22 11:31:38', '2017-04-22 11:31:38');
+INSERT INTO `handle_log` VALUES ('61', '1', 'former/add', '添加商品模型[id:3]', '{\"data\":{\"name\":\"\\u989c\\u8272\",\"spec\":\"\\u7ea2\\u8272,\\u84dd\\u8272,\\u767d\\u8272\"}}', '2017-04-22 11:32:04', '2017-04-22 11:32:04');
+INSERT INTO `handle_log` VALUES ('62', '1', 'former/add', '添加商品模型[id:4]', '{\"data\":{\"name\":\"\\u5c3a\\u5bf8\",\"spec\":\"\\u5927\\u7801,\\u4e2d\\u7801,\\u5c0f\\u7801\"}}', '2017-04-22 11:32:43', '2017-04-22 11:32:43');
+INSERT INTO `handle_log` VALUES ('63', '1', 'category/add', '添加商品分类[id:1]', '{\"data\":{\"name\":\"\\u8863\\u670d\",\"parent_id\":\"0\",\"en_name\":\"clothes\",\"sort\":\"1\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"}}', '2017-04-22 13:44:18', '2017-04-22 13:44:18');
+INSERT INTO `handle_log` VALUES ('64', '1', 'category/add', '添加商品分类[id:2]', '{\"data\":{\"name\":\"\\u4e0a\\u8863\",\"parent_id\":\"1\",\"en_name\":\"jacket\",\"sort\":\"1\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"}}', '2017-04-22 13:47:00', '2017-04-22 13:47:00');
+INSERT INTO `handle_log` VALUES ('65', '1', 'category/add', '添加商品分类[id:3]', '{\"data\":{\"name\":\"\\u886c\\u886b\",\"parent_id\":\"2\",\"en_name\":\"shirt\",\"sort\":\"1\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"}}', '2017-04-22 13:48:29', '2017-04-22 13:48:29');
+INSERT INTO `handle_log` VALUES ('66', '1', 'category/add', '添加商品分类[id:4]', '{\"data\":{\"name\":\"T\\u6064\",\"parent_id\":\"2\",\"en_name\":\"tshirt\",\"sort\":\"2\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"}}', '2017-04-22 13:51:33', '2017-04-22 13:51:33');
+INSERT INTO `handle_log` VALUES ('67', '1', 'category/add', '添加商品分类[id:5]', '{\"data\":{\"name\":\"\\u5916\\u5957\",\"parent_id\":\"2\",\"en_name\":\"waitao\",\"sort\":\"3\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"}}', '2017-04-22 13:53:39', '2017-04-22 13:53:39');
+INSERT INTO `handle_log` VALUES ('68', '1', 'category/add', '添加商品分类[id:6]', '{\"data\":{\"name\":\"\\u4e0a\\u8863\",\"parent_id\":\"0\",\"en_name\":\"jacket\",\"sort\":\"1\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"}}', '2017-04-22 13:56:53', '2017-04-22 13:56:53');
+INSERT INTO `handle_log` VALUES ('69', '1', 'category/add', '添加商品分类[id:7]', '{\"data\":{\"name\":\"\\u5916\\u5957\",\"parent_id\":\"6\",\"en_name\":\"coat\",\"sort\":\"1\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"}}', '2017-04-22 13:58:00', '2017-04-22 13:58:00');
+INSERT INTO `handle_log` VALUES ('70', '1', 'category/add', '添加商品分类[id:8]', '{\"data\":{\"name\":\"\\u4e2d\\u5c71\\u88c5\",\"parent_id\":\"7\",\"en_name\":\"Chinesetunicsuit\",\"sort\":\"1\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"}}', '2017-04-22 13:58:52', '2017-04-22 13:58:52');
+INSERT INTO `handle_log` VALUES ('71', '1', 'category/edit', '修改商品分类[id:8]', '{\"data\":{\"name\":\"\\u4e2d\\u5c71\\u88c5\",\"en_name\":\"zhongshan\",\"sort\":\"1\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"},\"id\":\"8\"}', '2017-04-22 14:34:49', '2017-04-22 14:34:49');
+INSERT INTO `handle_log` VALUES ('72', '1', 'category/edit', '修改商品分类[id:8]', '{\"data\":{\"name\":\"\\u4e2d\\u5c71\\u88c5\",\"en_name\":\"Chinesetunicsuit\",\"sort\":\"1\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"},\"id\":\"8\"}', '2017-04-22 14:34:57', '2017-04-22 14:34:57');
+INSERT INTO `handle_log` VALUES ('73', '1', 'category/destroy', '删除商品分类[id:8]', '{\"id\":\"8\"}', '2017-04-22 14:51:09', '2017-04-22 14:51:09');
+INSERT INTO `handle_log` VALUES ('74', '1', 'category/edit', '修改商品分类[id:6]', '{\"data\":{\"name\":\"\\u4e0a\\u8863\",\"en_name\":\"jacket\",\"sort\":\"1\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"},\"id\":\"6\"}', '2017-04-22 15:24:24', '2017-04-22 15:24:24');
+INSERT INTO `handle_log` VALUES ('75', '1', 'category/edit', '修改商品分类[id:7]', '{\"data\":{\"name\":\"\\u5916\\u5957\",\"en_name\":\"coat\",\"sort\":\"1\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"},\"id\":\"7\"}', '2017-04-22 15:25:52', '2017-04-22 15:25:52');
+INSERT INTO `handle_log` VALUES ('76', '1', 'user/edit', '修改用户[id:2]', '{\"data\":{\"name\":\"\\u4ed3\\u4e95\\u7a7a\\u4ed3\\u4e95\\u7a7a\\u4ed3\\u4e95\\u7a7a\",\"email\":\"canglaoshi@admin.com\",\"password\":\"\",\"confirm\":\"\",\"role\":\"2\",\"manager\":\"\",\"status\":\"1\"},\"id\":\"2\"}', '2017-04-22 15:52:26', '2017-04-22 15:52:26');
+INSERT INTO `handle_log` VALUES ('77', '1', 'user/edit', '修改用户[id:2]', '{\"data\":{\"name\":\"\\u4ed3\\u4e95\\u7a7a\\u4ed3\\u4e95\\u7a7a\\u4ed3\\u4e95\\u7a7a\",\"email\":\"canglaoshi@admin.com\",\"password\":\"\",\"confirm\":\"\",\"role\":\"2\",\"manager\":\"\",\"status\":\"1\"},\"id\":\"2\"}', '2017-04-22 15:54:58', '2017-04-22 15:54:58');
+INSERT INTO `handle_log` VALUES ('78', '1', 'rule/edit', '修改权限菜单[id:24]', '{\"data\":{\"parent_id\":\"22\",\"title\":\"\\u6dfb\\u52a0\\u5546\\u54c1\",\"name\":\"goods\\/add\",\"icon\":\"\",\"sort\":\"1\",\"islink\":\"\",\"isadmin\":\"\",\"isverify\":\"1\"},\"id\":\"24\"}', '2017-04-22 15:55:29', '2017-04-22 15:55:29');
+INSERT INTO `handle_log` VALUES ('79', '1', 'role/edit', '用户组修改[id:4]', '{\"data\":{\"name\":\"\\u5929\\u5929\\u5206\\u949f\",\"remark\":\"\\u5929\\u5929\\u5206\\u949f\",\"rule\":{\"3\":\"1\",\"21\":\"\",\"22\":\"\",\"24\":\"\",\"25\":\"\",\"26\":\"\",\"23\":\"\",\"27\":\"\",\"28\":\"\",\"29\":\"\",\"30\":\"\",\"31\":\"\",\"32\":\"\",\"33\":\"\",\"1\":\"1\",\"4\":\"1\",\"15\":\"1\",\"16\":\"1\",\"17\":\"1\",\"14\":\"1\",\"5\":\"\",\"11\":\"1\",\"12\":\"1\",\"13\":\"1\",\"2\":\"\",\"6\":\"\",\"7\":\"\",\"19\":\"\",\"20\":\"\",\"8\":\"1\",\"9\":\"1\",\"18\":\"1\",\"10\":\"1\"}},\"id\":\"4\"}', '2017-04-22 15:56:02', '2017-04-22 15:56:02');
+INSERT INTO `handle_log` VALUES ('80', '1', 'role/edit', '用户组修改[id:13]', '{\"data\":{\"name\":\"\\u5987\\u5973\\u8054\\u76df\",\"remark\":\"\\u5987\\u5973\\u8054\\u76df\",\"rule\":{\"3\":\"1\",\"21\":\"1\",\"22\":\"1\",\"24\":\"1\",\"25\":\"1\",\"26\":\"1\",\"23\":\"1\",\"27\":\"1\",\"28\":\"1\",\"29\":\"1\",\"30\":\"1\",\"31\":\"1\",\"32\":\"1\",\"33\":\"1\",\"1\":\"1\",\"4\":\"1\",\"15\":\"1\",\"16\":\"1\",\"17\":\"1\",\"14\":\"1\",\"5\":\"\",\"11\":\"1\",\"12\":\"1\",\"13\":\"1\",\"2\":\"\",\"6\":\"\",\"7\":\"\",\"19\":\"\",\"20\":\"\",\"8\":\"1\",\"9\":\"1\",\"18\":\"1\",\"10\":\"1\"}},\"id\":\"13\"}', '2017-04-22 15:56:16', '2017-04-22 15:56:16');
+INSERT INTO `handle_log` VALUES ('81', '1', 'role/add', '添加用户组[id:14]', '{\"data\":{\"name\":\"\\u4e2d\\u5fc3\\u7ec4\",\"remark\":\"\\u4e2d\\u5fc3\\u7ec4\",\"rule\":{\"3\":\"1\",\"21\":\"\",\"22\":\"\",\"24\":\"\",\"25\":\"\",\"26\":\"\",\"23\":\"\",\"27\":\"\",\"28\":\"\",\"29\":\"\",\"30\":\"\",\"31\":\"\",\"32\":\"\",\"33\":\"\",\"1\":\"1\",\"4\":\"1\",\"15\":\"1\",\"16\":\"1\",\"17\":\"1\",\"14\":\"1\",\"5\":\"\",\"11\":\"1\",\"12\":\"1\",\"13\":\"1\",\"2\":\"\",\"6\":\"\",\"7\":\"\",\"19\":\"\",\"20\":\"\",\"8\":\"1\",\"9\":\"1\",\"18\":\"1\",\"10\":\"1\"}}}', '2017-04-22 15:56:42', '2017-04-22 15:56:42');
+INSERT INTO `handle_log` VALUES ('82', '1', 'rule/add', '权限菜单添加[id:34]', '{\"data\":{\"parent_id\":\"20\",\"title\":\"\\u6dfb\\u52a0\\u5bfc\\u822a\",\"name\":\"system\\/add\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-22 15:57:35', '2017-04-22 15:57:35');
+INSERT INTO `handle_log` VALUES ('83', '1', 'former/add', '添加商品模型[id:5]', '{\"data\":{\"name\":\"\\u957f\\u5ea6\",\"spec\":\"3M,5M,6M\"}}', '2017-04-22 15:58:33', '2017-04-22 15:58:33');
+INSERT INTO `handle_log` VALUES ('84', '1', 'former/edit', '修改商品模型[id:5]', '{\"data\":{\"name\":\"\\u957f\\u5ea6\",\"spec\":\"3M,5M,6M\"},\"id\":\"5\"}', '2017-04-22 15:59:17', '2017-04-22 15:59:17');
+INSERT INTO `handle_log` VALUES ('85', '1', 'category/add', '添加商品分类[id:9]', '{\"data\":{\"parent_id\":\"7\",\"name\":\"\\u725b\\u4ed4\\u5916\\u5957\",\"en_name\":\"niuzai\",\"sort\":\"1\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"}}', '2017-04-22 16:02:21', '2017-04-22 16:02:21');
+INSERT INTO `handle_log` VALUES ('86', '1', 'category/edit', '修改商品分类[id:9]', '{\"data\":{\"name\":\"\\u725b\\u4ed4\\u5916\\u5957\",\"en_name\":\"niuza\",\"sort\":\"1\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"},\"id\":\"9\"}', '2017-04-22 16:02:30', '2017-04-22 16:02:30');
 
 -- ----------------------------
 -- Table structure for role
@@ -84,15 +201,16 @@ CREATE TABLE `role` (
   `create_time` datetime NOT NULL,
   `modify_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='部门表';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='部门表';
 
 -- ----------------------------
 -- Records of role
 -- ----------------------------
 INSERT INTO `role` VALUES ('2', '用户管理', '管理后台用户', '2017-04-05 14:04:38', '2017-04-14 15:51:01');
 INSERT INTO `role` VALUES ('3', '黄金无敌组', '这群人有很多黄金', '2017-04-05 16:39:50', '2017-04-14 15:22:40');
-INSERT INTO `role` VALUES ('4', '天天分钟', '天天分钟', '2017-04-08 12:28:23', '2017-04-12 17:40:18');
-INSERT INTO `role` VALUES ('13', '妇女联盟', '妇女联盟', '2017-04-14 15:36:27', '2017-04-14 15:41:48');
+INSERT INTO `role` VALUES ('4', '天天分钟', '天天分钟', '2017-04-08 12:28:23', '2017-04-22 15:56:02');
+INSERT INTO `role` VALUES ('13', '妇女联盟', '妇女联盟', '2017-04-14 15:36:27', '2017-04-22 15:56:15');
+INSERT INTO `role` VALUES ('14', '中心组', '中心组', '2017-04-22 15:56:42', '2017-04-22 15:56:42');
 
 -- ----------------------------
 -- Table structure for role_rule
@@ -158,6 +276,33 @@ INSERT INTO `role_rule` VALUES ('13', '15');
 INSERT INTO `role_rule` VALUES ('13', '16');
 INSERT INTO `role_rule` VALUES ('13', '17');
 INSERT INTO `role_rule` VALUES ('13', '18');
+INSERT INTO `role_rule` VALUES ('13', '21');
+INSERT INTO `role_rule` VALUES ('13', '22');
+INSERT INTO `role_rule` VALUES ('13', '23');
+INSERT INTO `role_rule` VALUES ('13', '24');
+INSERT INTO `role_rule` VALUES ('13', '25');
+INSERT INTO `role_rule` VALUES ('13', '26');
+INSERT INTO `role_rule` VALUES ('13', '27');
+INSERT INTO `role_rule` VALUES ('13', '28');
+INSERT INTO `role_rule` VALUES ('13', '29');
+INSERT INTO `role_rule` VALUES ('13', '30');
+INSERT INTO `role_rule` VALUES ('13', '31');
+INSERT INTO `role_rule` VALUES ('13', '32');
+INSERT INTO `role_rule` VALUES ('13', '33');
+INSERT INTO `role_rule` VALUES ('14', '1');
+INSERT INTO `role_rule` VALUES ('14', '3');
+INSERT INTO `role_rule` VALUES ('14', '4');
+INSERT INTO `role_rule` VALUES ('14', '8');
+INSERT INTO `role_rule` VALUES ('14', '9');
+INSERT INTO `role_rule` VALUES ('14', '10');
+INSERT INTO `role_rule` VALUES ('14', '11');
+INSERT INTO `role_rule` VALUES ('14', '12');
+INSERT INTO `role_rule` VALUES ('14', '13');
+INSERT INTO `role_rule` VALUES ('14', '14');
+INSERT INTO `role_rule` VALUES ('14', '15');
+INSERT INTO `role_rule` VALUES ('14', '16');
+INSERT INTO `role_rule` VALUES ('14', '17');
+INSERT INTO `role_rule` VALUES ('14', '18');
 
 -- ----------------------------
 -- Table structure for rule
@@ -178,7 +323,7 @@ CREATE TABLE `rule` (
   `modify_time` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rulename` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='权限&菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COMMENT='权限&菜单表';
 
 -- ----------------------------
 -- Records of rule
@@ -201,6 +346,22 @@ INSERT INTO `rule` VALUES ('15', '4', 'user/add', '添加用户', '0', '1', '', 
 INSERT INTO `rule` VALUES ('16', '4', 'user/edit', '修改用户', '0', '1', '', '3', '0', '3', '2017-04-08 09:52:04', '2017-04-08 09:52:31');
 INSERT INTO `rule` VALUES ('17', '4', 'user/status', '禁用用户', '0', '1', '', '5', '0', '3', '2017-04-08 09:55:44', '2017-04-08 09:55:44');
 INSERT INTO `rule` VALUES ('18', '8', 'index/log', '操作日志', '1', '0', '', '2', '0', '2', '2017-04-12 17:40:07', '2017-04-12 17:41:26');
+INSERT INTO `rule` VALUES ('19', '0', 'system', '系统设置', '1', '0', '', '6', '1', '1', '2017-04-17 17:41:00', '2017-04-17 17:42:37');
+INSERT INTO `rule` VALUES ('20', '19', 'system/navigation', '前台导航', '1', '0', '', '255', '1', '2', '2017-04-17 17:43:40', '2017-04-17 17:43:40');
+INSERT INTO `rule` VALUES ('21', '0', 'goods', '商品管理', '1', '0', 'fa fa-cubes', '2', '1', '1', '2017-04-22 10:15:08', '2017-04-22 10:15:40');
+INSERT INTO `rule` VALUES ('22', '21', 'goods/index', '商品列表', '1', '0', '', '1', '1', '2', '2017-04-22 10:16:41', '2017-04-22 10:16:41');
+INSERT INTO `rule` VALUES ('23', '21', 'category/index', '商品分类', '1', '0', '', '2', '1', '2', '2017-04-22 10:18:00', '2017-04-22 10:18:00');
+INSERT INTO `rule` VALUES ('24', '22', 'goods/add', '添加商品', '0', '0', '', '1', '1', '3', '2017-04-22 10:18:37', '2017-04-22 15:55:29');
+INSERT INTO `rule` VALUES ('25', '22', 'goods/edit', '修改商品', '0', '0', '', '255', '1', '3', '2017-04-22 10:19:02', '2017-04-22 10:19:02');
+INSERT INTO `rule` VALUES ('26', '22', 'goods/destroy', '删除商品', '0', '0', '', '255', '1', '3', '2017-04-22 10:19:50', '2017-04-22 10:19:50');
+INSERT INTO `rule` VALUES ('27', '23', 'category/add', '添加分类', '0', '0', '', '255', '1', '3', '2017-04-22 10:21:23', '2017-04-22 10:21:23');
+INSERT INTO `rule` VALUES ('28', '23', 'category/edit', '修改分类', '0', '0', '', '255', '1', '3', '2017-04-22 10:21:46', '2017-04-22 10:21:46');
+INSERT INTO `rule` VALUES ('29', '23', 'category/destroy', '删除分类', '0', '0', '', '255', '1', '3', '2017-04-22 10:22:29', '2017-04-22 10:22:29');
+INSERT INTO `rule` VALUES ('30', '21', 'former/index', '商品模型', '1', '0', '', '255', '1', '2', '2017-04-22 10:24:13', '2017-04-22 10:24:13');
+INSERT INTO `rule` VALUES ('31', '30', 'former/add', '添加模型', '0', '0', '', '255', '1', '3', '2017-04-22 10:24:57', '2017-04-22 10:24:57');
+INSERT INTO `rule` VALUES ('32', '30', 'former/edit', '修改模型', '0', '0', '', '255', '1', '3', '2017-04-22 10:25:16', '2017-04-22 10:25:16');
+INSERT INTO `rule` VALUES ('33', '30', 'former/destroy', '模型删除', '1', '0', '', '255', '1', '3', '2017-04-22 11:29:00', '2017-04-22 11:29:00');
+INSERT INTO `rule` VALUES ('34', '20', 'system/add', '添加导航', '0', '0', '', '255', '1', '3', '2017-04-22 15:57:34', '2017-04-22 15:57:34');
 
 -- ----------------------------
 -- Table structure for user
@@ -219,14 +380,15 @@ CREATE TABLE `user` (
   `last_time` datetime DEFAULT NULL COMMENT '最后一次登录时间',
   `create_time` datetime DEFAULT NULL,
   `modify_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin@admin.com', 'fcea920f7412b5da7be0cf42b8c93759', '0', '0', '超管', '18526232020', '1', '127.0.0.1', '2017-04-14 17:48:07', '2017-03-22 10:35:17', '2017-04-14 17:48:07');
-INSERT INTO `user` VALUES ('2', 'canglaoshi@admin.com', '670b14728ad9902aecba32e22fa4f6bd', '2', '0', '仓井空仓井空仓井空', null, '1', null, null, '2017-04-06 12:03:12', '2017-04-14 14:14:34');
+INSERT INTO `user` VALUES ('1', 'admin@admin.com', 'fcea920f7412b5da7be0cf42b8c93759', '0', '0', '超管', '18526232020', '1', '127.0.0.1', '2017-04-22 10:12:10', '2017-03-22 10:35:17', '2017-04-22 10:12:10');
+INSERT INTO `user` VALUES ('2', 'canglaoshi@admin.com', '670b14728ad9902aecba32e22fa4f6bd', '2', '0', '仓井空仓井空仓井空', null, '1', null, null, '2017-04-06 12:03:12', '2017-04-22 15:54:58');
 INSERT INTO `user` VALUES ('3', 'xixi@admin.com', 'e10adc3949ba59abbe56e057f20f883e', '2', '0', '纱纱相', null, '1', null, null, '2017-04-06 17:20:17', '2017-04-06 17:30:52');
 INSERT INTO `user` VALUES ('4', 'sb112@admin.com', '4297f44b13955235245b2497399d7a93', '3', '0', '黄育佳', null, '1', null, null, '2017-04-14 15:07:47', '2017-04-14 15:08:11');
 

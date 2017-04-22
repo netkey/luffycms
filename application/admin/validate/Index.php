@@ -1,11 +1,10 @@
 <?php
 namespace app\admin\validate;
 
-use think\Validate;
+use app\admin\library\Validate;
 
 class Index extends Validate
 {
-    use \app\admin\library\traits\Validate;
 
     protected $rule = [
         'email|登录邮箱' => ['require', 'email'],
@@ -16,6 +15,10 @@ class Index extends Validate
 
     protected $scene = [
         'login' => ['email', 'password', 'captcha'],
+        'personal' => ['password', 'confirm'],
+    ];
+
+    protected $requireField = [
         'personal' => ['password', 'confirm'],
     ];
 }

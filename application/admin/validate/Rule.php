@@ -1,12 +1,10 @@
 <?php
 namespace app\admin\validate;
 
-use think\Validate;
+use app\admin\library\Validate;
 
 class Rule extends Validate
 {
-    use \app\admin\library\traits\Validate;
-
     protected $rule = [
         'parent_id|上级菜单' => ['require', 'existPid:rule'],
         'title|菜单标题' => ['require', 'chs', 'length:2,10'],
@@ -19,6 +17,11 @@ class Rule extends Validate
     ];
 
     protected $scene = [
+        'add' => ['parent_id', 'title', 'name', 'icon', 'sort', 'islink', 'isadmin', 'isverify'],
+        'edit' => ['parent_id', 'title', 'name', 'icon', 'sort', 'islink', 'isadmin', 'isverify'],
+    ];
+
+    protected $requireField = [
         'add' => ['parent_id', 'title', 'name', 'icon', 'sort', 'islink', 'isadmin', 'isverify'],
         'edit' => ['parent_id', 'title', 'name', 'icon', 'sort', 'islink', 'isadmin', 'isverify'],
     ];

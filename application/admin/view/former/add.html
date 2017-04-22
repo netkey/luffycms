@@ -1,0 +1,22 @@
+    <blockquote class="layui-elem-quote">模型规格,如:红色,白色,蓝色; "," 号分隔。</blockquote>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>商品模型添加</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane" method="post" action="{:url('add')}">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="field-tip">*</span>模型名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="data[name]" lay-verify="former_name" autocomplete="off" placeholder="模型名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label space-700"><span class="field-tip">*</span>模型规格</label>
+            <div class="layui-input-block space-700">
+                <textarea placeholder="模型规格" name="data[spec]" class="layui-textarea"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <a class="layui-btn" lay-submit="" lay-filter="save">保存</a>
+        </div>
+    </form>

@@ -4,7 +4,6 @@ namespace app\admin\library;
 use app\admin\library\User as UserLibrary;
 use think\Exception;
 use think\exception\ClassNotFoundException;
-use think\exception\ValidateException;
 use think\Hook;
 use think\Loader;
 
@@ -33,13 +32,20 @@ class Controller extends \think\Controller
      */
     protected function validate($data = [], $scene = 'add', $message = [], $batch = false, $callback = null)
     {
-        $data = array_merge($this->request->post('data/a', []), $data);
-        $scene = $this->request->controller() . '.' . $scene;
+        $request = $this->request->post('data/a', []);
         $this->validateFailException();
-        try {
-            parent::validate($data, $scene, $message, $batch, $callback);
-        } catch (ValidateException $e) {
-            throw new Exception($e->getMessage());
+
+        $v = Loader::validate($this->request->controller());
+        $v->scene($scene);
+
+        if (!$v->check($data) || !$v->checkField($request)) {
+            if ($this->failException) {
+                throw new Exception($v->getError());
+            } else {
+                return $v->getError();
+            }
+        } else {
+            return true;
         }
     }
     /**
@@ -112,8 +118,7 @@ class Controller extends \think\Controller
         if (!($query instanceof \think\Model)) {
             throw new Exception("操作失败，请刷新页面重试！");
         }
-        $data = array_merge($this->request->post('data/a', []), $where);
-        $this->trigger($query, $data, 'delete');
+        $this->trigger($query, $where, 'delete');
         if ($query->delete() === false) {
             $error = $query->getError() ?: '操作失败，请刷新页面重试！';
             throw new Exception($error);

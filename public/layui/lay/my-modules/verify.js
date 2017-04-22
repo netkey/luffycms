@@ -9,6 +9,7 @@ layui.define(['jquery', 'form'], function(exports) {
         tags: [/^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]{2,10}$/, '标签名称必须2到10位'],
         sort :[/^[0-9]{1,3}/,'排序只有全部数字并且最多三位'],
         captcha: [/^[0-9a-zA-Z]{4}$/, '验证码必须为4位数字或者字母'],
+        former_name:[/(.+){2,5}/, '商品模型名称必须2到5位'],
         pass: function(value) {
             if(value != ''){
               if(!new RegExp("^(.+){6,12}$").test(value)){
