@@ -2,7 +2,6 @@
 namespace app\admin\model;
 
 use think\Db;
-use think\Exception;
 use think\Model;
 
 class Category extends Model
@@ -30,7 +29,7 @@ class Category extends Model
      */
     protected function scopeList($query)
     {
-        $query->field('id,parent_id,name,en_name,level');
+        $query->field('id,parent_id,name,en_name,level,sort');
     }
 
     /**
@@ -81,22 +80,5 @@ class Category extends Model
         }
         return Db::name('category')->where('id', 'in', $ids)
             ->order('level ASC')->column('name');
-    }
-    /**
-     * 删除分类前的事件
-     * @method   triggerDelete
-     * @DateTime 2017-04-22T14:37:03+0800
-     * @param    [type]                   $data [description]
-     * @return   [type]                         [description]
-     */
-    public function triggerDelete($data)
-    {
-        if ($this->childrens()->count() > 0) {
-            throw new Exception('分类下还有子分类,不可以删除。');
-        }
-
-        if ($this->goods()->count() > 0) {
-            throw new Exception('分类下还有商品,不可以删除;请把分类下的商品转移到其他分类。');
-        }
     }
 }

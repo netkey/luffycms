@@ -1,7 +1,7 @@
 <?php
 namespace app\admin\search;
 
-use app\admin\library\Search;
+use luffyzhao\helper\Search;
 
 class User extends Search
 {

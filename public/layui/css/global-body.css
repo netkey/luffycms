@@ -29,6 +29,10 @@ body[login] .layui-form .layui-form-title{
     font-size: 12px;
     margin-bottom: 15px;
 }
+.layui-select[lay-multiple]{
+    min-height: 200px;
+    width: 100%;
+}
 .layui-icon .iconfont{
     font-size: 30px;
 }

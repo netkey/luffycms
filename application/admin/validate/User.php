@@ -1,7 +1,7 @@
 <?php
 namespace app\admin\validate;
 
-use app\admin\library\Validate;
+use luffyzhao\helper\Validate;
 
 class User extends Validate
 {

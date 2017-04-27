@@ -98,6 +98,12 @@ class Category extends Controller
             $this->error('商品分类不存在！');
         }
         try {
+            if ($category->childrens()->count() > 0) {
+                throw new Exception('分类下还有子分类,不可以删除。');
+            }
+            if ($category->goods()->count() > 0) {
+                throw new Exception('分类下还有商品,不可以删除;请把分类下的商品转移到其他分类。');
+            }
             $this->delete($category);
         } catch (Exception $e) {
             $this->error($e->getMessage());

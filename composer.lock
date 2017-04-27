@@ -4,9 +4,43 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e75b38de7f53c2cf5fc4c35180a2aed0",
-    "content-hash": "786db149f3fc0327c3d1eb9670d10cae",
+    "hash": "ebf47dd1fb413acd7556c71db9773efe",
+    "content-hash": "b133092b26a41266140370fbb7b4048f",
     "packages": [
+        {
+            "name": "luffyzhao/helper",
+            "version": "1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lovezhao311/luffy-tphelper.git",
+                "reference": "5628ea112994b36a2f902312f9b13985d6925eda"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/lovezhao311/luffy-tphelper/5628ea112994b36a2f902312f9b13985d6925eda.zip",
+                "reference": "5628ea112994b36a2f902312f9b13985d6925eda",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0",
+                "topthink/framework": "5.0.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "luffyzhao\\helper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "luffyzhao",
+                    "email": "luffyzhao@vip.126.com"
+                }
+            ],
+            "description": "thinkphp 5.0.7 函数助手",
+            "time": "2017-04-27 06:12:26"
+        },
         {
             "name": "topthink/framework",
             "version": "v5.0.7",
@@ -143,7 +177,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.0"
+        "php": ">=7.0.0"
     },
     "platform-dev": []
 }
