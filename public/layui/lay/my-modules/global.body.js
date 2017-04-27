@@ -276,13 +276,13 @@ layui.define(['layer', 'code', 'form', 'element', 'util', 'laytpl', 'laypage', '
                 layer.msg('文件上传失败！！', { time: 5000, icon: 5 });
                 return false;
             }
-            var $img = $(input).parents('.site-demo-upload').children('img');
+            var $img = $(input).parents('.layui-input-block').children('img');
             if($img.length > 0){
                 $img.attr('src', res.data.src);
             }else{
-                $(input).parents('.site-demo-upload').prepend('<img src="'+res.data.src+'" />');
+                $(input).parents('.layui-input-block').prepend('<img src="'+res.data.src+'" />');
             }
-            $(input).parents('.site-demo-upload').children('input[type="hidden"]').val(res.data.src);
+            $(input).parents('.layui-input-block').children('input[type="hidden"]').val(res.data.src);
         },
         error:function(){
             layer.msg('文件上传失败！');
