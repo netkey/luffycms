@@ -132,7 +132,7 @@ td[colspan]{
     box-sizing: border-box!important;
     text-align: center;
 }
-.site-demo-upload .layui-upload-button {
+.layui-input-block .layui-upload-button {
     background-color: rgba(0,0,0,.2);
     color: rgba(255,255,255,1);
     outline: 0;
@@ -142,7 +142,7 @@ td[colspan]{
     -moz-box-sizing: border-box!important;
     box-sizing: border-box!important;
 }
-.site-demo-upload .site-demo-upbar {
+.layui-input-block .site-demo-upbar {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -194,6 +194,11 @@ td[colspan]{
     box-sizing: border-box;
     float: left;
 }
+.layui-input-block[pane][auto]{
+    height: auto;
+    line-height: normal;
+    padding-left: 0px;
+}
 .layui-input-block[pane]+.layui-btn{
     float: left;
     position: relative;
@@ -228,32 +233,38 @@ td[colspan]{
     text-decoration: none;
     font-size: 11px;
 }
+.space-250{
+    max-width: 250px!important;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
 .space-300{
-    max-width: 300px;
+    max-width: 300px!important;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
 }
 .space-400{
-    max-width: 400px;
+    max-width: 400px!important;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
 }
 .space-500{
-    max-width: 500px;
+    max-width: 500px!important;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
 }
 .space-600{
-    max-width: 600px;
+    max-width: 600px!important;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
 }
 .space-700{
-    max-width: 700px;
+    max-width: 700px!important;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;

@@ -272,7 +272,7 @@ layui.define(['layer', 'code', 'form', 'element', 'util', 'laytpl', 'laypage', '
         },
         success: function(res, input) { //上传成功后的回调
             layer.close('loading');
-            if (res.code == 0) {
+            if (res.code != 0) {
                 layer.msg('文件上传失败！！', { time: 5000, icon: 5 });
                 return false;
             }
