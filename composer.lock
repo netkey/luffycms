@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "luffyzhao/helper",
-            "version": "1.0.10",
+            "version": "1.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lovezhao311/luffy-tphelper.git",
-                "reference": "085931ad44812d485bfc8367e31bd20bd9680f8d"
+                "reference": "1e9df585f4098e79a0bde5f8049a9815f7fee87e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/lovezhao311/luffy-tphelper/085931ad44812d485bfc8367e31bd20bd9680f8d.zip",
-                "reference": "085931ad44812d485bfc8367e31bd20bd9680f8d",
+                "url": "https://files.phpcomposer.com/files/lovezhao311/luffy-tphelper/1e9df585f4098e79a0bde5f8049a9815f7fee87e.zip",
+                "reference": "1e9df585f4098e79a0bde5f8049a9815f7fee87e",
                 "shasum": ""
             },
             "require": {
@@ -39,7 +39,7 @@
                 }
             ],
             "description": "thinkphp 5.0.7 函数助手",
-            "time": "2017-04-27 09:13:33"
+            "time": "2017-04-28 09:17:43"
         },
         {
             "name": "topthink/framework",

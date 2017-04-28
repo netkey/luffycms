@@ -1,0 +1,54 @@
+<div class="layui-iframe-main">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>商品规格</legend>
+        <div class="layui-field-box">
+            <form class="layui-form layui-form-pane form-spec">
+                {volist name="former[spec]" id="vo"}
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{$vo.name}</label>
+                    <div class="layui-input-block">
+                        {volist name=":explode(',',$vo['spec'])" id="v"}
+                        <input type="checkbox" name="{$vo.name}" value="{$v}" title="{$v}">
+                        {/volist}
+                    </div>
+                </div>
+                {/volist}
+                <div class="layui-form-item">
+                    <a class="layui-btn" lay-submit lay-filter="choice">保存</a>
+                </div>
+            </form>
+        </div>
+    </fieldset>
+</div>
+
+<script type="text/javascript">
+layui.use(['layer','form','laytpl'], function(){
+    var $ = layui.jquery,
+        layer = layui.layer,
+        laytpl = layui.laytpl,
+        form = layui.form();
+    /**
+     * 选择规格
+     * @method
+     * @DateTime 2017-04-28T11:52:39+0800
+     * @param    {[type]}                 data) {                   var action [description]
+     * @return   {[type]}                       [description]
+     */
+    form.on('submit(choice)', function(data) {
+        var params = layui.serializeArray(data.form);
+        var j=0;
+        for (var i in params) {
+            j++;
+        }
+        if(j > 3 || j == 0){
+            layer.alert('最少选择一个最多选择三个规格模型！');
+            return false;
+        }
+
+        if(window.parent.layui.goodsSpec(params)){
+            window.parent.layer.closeAll('iframe');
+        }
+        return false;
+    });
+});
+</script>

@@ -56,6 +56,12 @@ body[login] .layui-form .layui-form-title{
 .layui-form[search] .layui-form-item .layui-form-label{
     margin-top: 10px;
 }
+.layui-form-pane{
+    position: relative;
+}
+.layui-iframe-main{
+    padding:0px 15px;
+}
 .layui-form-pane .layui-input-inline[pane] {
     position: relative;
     border: 1px solid #e6e6e6;
@@ -80,6 +86,26 @@ td[colspan]{
 }
 .layui-form-pane .layui-form-item {
     max-width: 1000px;
+}
+.layui-form-pane .layui-form-item .layui-form-header,.layui-form-pane .layui-form-item .layui-form-body{
+    display: block;
+    height: 38px;
+}
+.layui-form-item .layui-form-body{
+    margin-top: 10px;
+}
+.layui-form-item .layui-form-body > .layui-input-inline{
+    width: 111px;
+    margin-right: 0px;
+}
+.layui-form-item .layui-form-body > .layui-input-inline .layui-btn-mini{
+    margin-top: 9px;
+}
+.layui-form-item .layui-form-body > .layui-input-inline > input{
+    text-align: center;
+}
+.layui-form-pane .layui-form-item.layui-form-text{
+    max-width: 100%;
 }
 .layui-form-item .layui-input-inline-mini{
     width: 70px;
@@ -269,4 +295,21 @@ td[colspan]{
     text-overflow:ellipsis;
     white-space:nowrap;
 }
-
+.space-800{
+    max-width: 800px!important;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.space-900{
+    max-width: 900px!important;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.space-1000{
+    max-width: 1000px!important;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}

@@ -6,6 +6,7 @@ namespace app\admin\controller;
 
 use app\admin\library\Controller;
 use app\admin\model\Category as CategoryModel;
+use app\admin\model\Former as FormerModel;
 use app\admin\model\Goods as GoodsModel;
 
 class Goods extends Controller
@@ -35,6 +36,7 @@ class Goods extends Controller
     {
         $categoryList = CategoryModel::scope('option')->all();
         $this->assign('categoryList', treeSort($categoryList));
+        $this->assign('formerList', FormerModel::all());
         return $this->fetch();
     }
     /**

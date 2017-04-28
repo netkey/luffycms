@@ -36,7 +36,9 @@ class Former extends Controller
         if ($this->request->isAjax()) {
             try {
                 $former = new FormerModel();
-                $this->save($former);
+                $data = $this->request->post('data/a');
+                $data['spec'] = $this->item($data['spec']);
+                $this->save($former, [], 'add', $data);
             } catch (Exception $e) {
                 $this->error($e->getMessage());
             }
@@ -44,6 +46,7 @@ class Former extends Controller
         }
         return $this->fetch();
     }
+
     /**
      * 修改商品模型
      * @method   edit
@@ -59,13 +62,51 @@ class Former extends Controller
         }
         if ($this->request->isAjax()) {
             try {
-                $this->save($former, [], 'edit');
+                $data = $this->request->post('data/a');
+                $data['spec'] = $this->item($data['spec']);
+                $this->save($former, [], 'edit', $data);
             } catch (Exception $e) {
                 $this->error($e->getMessage());
             }
             $this->success('修改商品模型[id:' . $id . ']', 'former/index');
         }
         $this->assign('former', $former);
+        return $this->fetch();
+    }
+
+    /**
+     * spec数组重组
+     * @method   item
+     * @DateTime 2017-04-28T16:57:17+0800
+     * @param    [type]                   $specs [description]
+     * @return   [type]                          [description]
+     */
+    protected function item($specs)
+    {
+        $array = [];
+        foreach ($specs['name'] as $key => $value) {
+            $array[$key] = [
+                'name' => $specs['name'][$key],
+                'spec' => $specs['spec'][$key],
+            ];
+        }
+        return $array;
+    }
+
+    /**
+     * iframe选择商品模型
+     * @method   iframe
+     * @DateTime 2017-04-28T11:36:11+0800
+     * @return   [type]                   [description]
+     */
+    public function iframe($id)
+    {
+        $params = $this->request->get('params');
+
+        if (!empty($params)) {
+            $this->assign('params', json_decode($params, true));
+        }
+        $this->assign('former', FormerModel::get($id));
         return $this->fetch();
     }
     /**

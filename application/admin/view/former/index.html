@@ -1,20 +1,20 @@
     <fieldset class="layui-elem-field layui-field-title">
-        <legend>模型搜索</legend>
+        <legend>搜索</legend>
     </fieldset>
-    <form class="layui-form layui-form-pane" action="{:url('former/index')}" search>
+    <form class="layui-form layui-form-pane" action="{:url('index')}" search>
         <div class="layui-form-item">
-            <label class="layui-form-label">模型名称</label>
+            <label class="layui-form-label">名称</label>
             <div class="layui-input-inline">
-                <input type="text" name="search[name]" autocomplete="off" placeholder="模型名称" class="layui-input">
+                <input type="text" name="search[name]" autocomplete="off" placeholder="名称" class="layui-input">
             </div>
             <div class="layui-input-inline layui-btn-group">
                 <button class="layui-btn layui-btn-primary" lay-submit="" data-elem=".layui-body-table" lay-filter="search"><i class="iconfont icon-originalimage"></i></button>
-                <a class="layui-btn layui-btn-primary" href="{:url('former/add')}"><i class="layui-icon">&#xe654;</i></a>
+                <a class="layui-btn layui-btn-primary" href="{:url('add')}"><i class="layui-icon">&#xe654;</i></a>
             </div>
         </div>
     </form>
     <fieldset class="layui-elem-field layui-field-title">
-        <legend>模型列表</legend>
+        <legend>列表</legend>
     </fieldset>
 
     <table class="layui-table" lay-skin="line">
@@ -27,12 +27,12 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>模型名称</th>
-                <th>模型规格</th>
+                <th>名称</th>
+                <th>规格</th>
                 <th>操作</th>
             </tr>
         </thead>
-        <tbody class="layui-body-table" data-url="{:url('former/index')}" data-elem=".layui-body-table">
+        <tbody class="layui-body-table" data-url="{:url('index')}" data-elem=".layui-body-table">
             
         </tbody>
         <script type="text/html" class="layui-body-table-script">
@@ -40,7 +40,7 @@
                 <tr>
                     <td>{{ item.id }}</td>
                     <td>{{ item.name }}</td>
-                    <td><div class="space-500">{{ item.spec }}</div></td>
+                    <td><div class="space-500">{{ JSON.stringify(item.spec) }}</div></td>
                     <td>
                         <a href="/admin/former/edit/id/{{ item.id }}">
                             <i class="layui-icon">&#xe642;</i>

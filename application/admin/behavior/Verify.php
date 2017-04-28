@@ -21,6 +21,7 @@ class Verify
     protected $_noVerify = [
         'index/index',
         'index/logout',
+        'former/iframe',
     ];
 
     public function actionBegin(&$params)

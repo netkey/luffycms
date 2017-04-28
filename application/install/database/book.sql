@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50716
 File Encoding         : 65001
 
-Date: 2017-04-22 16:31:03
+Date: 2017-04-28 18:03:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,7 +41,7 @@ CREATE TABLE `category` (
 -- ----------------------------
 INSERT INTO `category` VALUES ('6', '0', '上衣', 'jacket', '6,', '', '', '', '1', '1', '2017-04-22 13:56:53', '2017-04-22 15:24:24');
 INSERT INTO `category` VALUES ('7', '6', '外套', 'coat', '6,7,', '', '', '', '1', '2', '2017-04-22 13:58:00', '2017-04-22 15:25:52');
-INSERT INTO `category` VALUES ('9', '7', '牛仔外套', 'niuza', '6,7,9,', '', '', '', '1', '3', '2017-04-22 16:02:21', '2017-04-22 16:02:29');
+INSERT INTO `category` VALUES ('9', '7', '牛仔外套', 'niuza', '6,7,9,', '111', '', '', '1', '3', '2017-04-22 16:02:21', '2017-04-24 17:30:59');
 
 -- ----------------------------
 -- Table structure for former
@@ -49,20 +49,18 @@ INSERT INTO `category` VALUES ('9', '7', '牛仔外套', 'niuza', '6,7,9,', '', 
 DROP TABLE IF EXISTS `former`;
 CREATE TABLE `former` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL COMMENT '模型名称:红色',
-  `spec` varchar(255) NOT NULL COMMENT '模型规格：白色,红色,蓝色',
+  `name` varchar(50) NOT NULL COMMENT '规格名称:红色',
+  `spec` text NOT NULL COMMENT '规格:数组类型',
   `create_time` datetime NOT NULL,
   `modify_time` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `former_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='商品模型表';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='商品规格表';
 
 -- ----------------------------
 -- Records of former
 -- ----------------------------
-INSERT INTO `former` VALUES ('3', '颜色', '红色,蓝色,白色', '2017-04-22 11:32:04', '2017-04-22 11:32:04');
-INSERT INTO `former` VALUES ('4', '尺寸', '大码,中码,小码', '2017-04-22 11:32:43', '2017-04-22 11:32:43');
-INSERT INTO `former` VALUES ('5', '长度', '3M,5M,6M', '2017-04-22 15:58:33', '2017-04-22 15:59:17');
+INSERT INTO `former` VALUES ('15', '上衣', '[{\"spec\":\"湍有那,砂岩\",\"name\":\"员\"},{\"spec\":\"搞,否\",\"name\":\"基\"}]', '2017-04-28 17:38:21', '2017-04-28 17:38:21');
 
 -- ----------------------------
 -- Table structure for goods
@@ -71,7 +69,6 @@ DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) NOT NULL COMMENT '商品分类',
-  `category_path` varchar(50) NOT NULL COMMENT '分类路径',
   `name` varchar(255) NOT NULL COMMENT '商品名称',
   `title` varchar(255) DEFAULT NULL COMMENT '前台显示的商品标题',
   `keywords` varchar(255) DEFAULT NULL COMMENT '前台显示的商品关键词',
@@ -98,7 +95,7 @@ CREATE TABLE `handle_log` (
   `create_time` datetime DEFAULT NULL,
   `modify_time` datetime DEFAULT NULL COMMENT '日志表',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8 COMMENT='操作日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8 COMMENT='操作日志表';
 
 -- ----------------------------
 -- Records of handle_log
@@ -189,6 +186,43 @@ INSERT INTO `handle_log` VALUES ('83', '1', 'former/add', '添加商品模型[id
 INSERT INTO `handle_log` VALUES ('84', '1', 'former/edit', '修改商品模型[id:5]', '{\"data\":{\"name\":\"\\u957f\\u5ea6\",\"spec\":\"3M,5M,6M\"},\"id\":\"5\"}', '2017-04-22 15:59:17', '2017-04-22 15:59:17');
 INSERT INTO `handle_log` VALUES ('85', '1', 'category/add', '添加商品分类[id:9]', '{\"data\":{\"parent_id\":\"7\",\"name\":\"\\u725b\\u4ed4\\u5916\\u5957\",\"en_name\":\"niuzai\",\"sort\":\"1\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"}}', '2017-04-22 16:02:21', '2017-04-22 16:02:21');
 INSERT INTO `handle_log` VALUES ('86', '1', 'category/edit', '修改商品分类[id:9]', '{\"data\":{\"name\":\"\\u725b\\u4ed4\\u5916\\u5957\",\"en_name\":\"niuza\",\"sort\":\"1\",\"title\":\"\",\"keywords\":\"\",\"description\":\"\"},\"id\":\"9\"}', '2017-04-22 16:02:30', '2017-04-22 16:02:30');
+INSERT INTO `handle_log` VALUES ('87', '1', 'index/login', '用户登录', '{\"data\":{\"email\":\"admin@admin.com\",\"password\":\"1234567\",\"captcha\":\"wsnc\"}}', '2017-04-24 15:31:55', '2017-04-24 15:31:55');
+INSERT INTO `handle_log` VALUES ('88', '1', 'category/edit', '修改商品分类[id:9]', '{\"data\":{\"name\":\"\\u725b\\u4ed4\\u5916\\u5957\",\"en_name\":\"niuza\",\"sort\":\"1\",\"title\":\"111\",\"keywords\":\"\",\"description\":\"\"},\"id\":\"9\"}', '2017-04-24 17:30:59', '2017-04-24 17:30:59');
+INSERT INTO `handle_log` VALUES ('89', '1', 'index/login', '用户登录', '{\"data\":{\"email\":\"admin@admin.com\",\"password\":\"1234567\",\"captcha\":\"euhv\"}}', '2017-04-27 12:09:15', '2017-04-27 12:09:15');
+INSERT INTO `handle_log` VALUES ('90', '1', 'rule/add', '权限菜单添加[id:35]', '{\"data\":{\"parent_id\":\"3\",\"title\":\"\\u6587\\u4ef6\\u4e0a\\u4f20\",\"name\":\"index\\/upload\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"\",\"isadmin\":\"\",\"isverify\":\"1\"}}', '2017-04-27 16:02:59', '2017-04-27 16:02:59');
+INSERT INTO `handle_log` VALUES ('91', '1', 'index/upload', '上传图片成功', '[]', '2017-04-27 16:06:28', '2017-04-27 16:06:28');
+INSERT INTO `handle_log` VALUES ('92', '1', 'index/upload', '上传图片成功', '[]', '2017-04-27 16:06:52', '2017-04-27 16:06:52');
+INSERT INTO `handle_log` VALUES ('93', '1', 'index/upload', '上传图片成功', '[]', '2017-04-27 16:08:11', '2017-04-27 16:08:11');
+INSERT INTO `handle_log` VALUES ('94', '1', 'index/upload', '0', '[]', '2017-04-27 16:12:17', '2017-04-27 16:12:17');
+INSERT INTO `handle_log` VALUES ('95', '1', 'index/upload', '0', '[]', '2017-04-27 17:39:56', '2017-04-27 17:39:56');
+INSERT INTO `handle_log` VALUES ('96', '1', 'index/upload', '0', '[]', '2017-04-27 18:04:21', '2017-04-27 18:04:21');
+INSERT INTO `handle_log` VALUES ('97', '1', 'index/upload', '0', '[]', '2017-04-27 18:06:54', '2017-04-27 18:06:54');
+INSERT INTO `handle_log` VALUES ('98', '1', 'index/login', '用户登录', '{\"data\":{\"email\":\"admin@admin.com\",\"password\":\"1234567\",\"captcha\":\"ppj4\"}}', '2017-04-28 09:18:16', '2017-04-28 09:18:16');
+INSERT INTO `handle_log` VALUES ('99', '1', 'index/upload', '0', '[]', '2017-04-28 09:18:30', '2017-04-28 09:18:30');
+INSERT INTO `handle_log` VALUES ('100', '1', 'index/upload', '0', '[]', '2017-04-28 09:20:33', '2017-04-28 09:20:33');
+INSERT INTO `handle_log` VALUES ('101', '1', 'index/upload', '0', '[]', '2017-04-28 09:22:12', '2017-04-28 09:22:12');
+INSERT INTO `handle_log` VALUES ('102', '1', 'index/upload', '0', '[]', '2017-04-28 09:24:13', '2017-04-28 09:24:13');
+INSERT INTO `handle_log` VALUES ('103', '1', 'index/upload', '0', '[]', '2017-04-28 09:30:20', '2017-04-28 09:30:20');
+INSERT INTO `handle_log` VALUES ('104', '1', 'index/upload', '0', '[]', '2017-04-28 09:36:50', '2017-04-28 09:36:50');
+INSERT INTO `handle_log` VALUES ('105', '1', 'index/upload', '0', '[]', '2017-04-28 09:51:09', '2017-04-28 09:51:09');
+INSERT INTO `handle_log` VALUES ('106', '1', 'index/upload', '0', '[]', '2017-04-28 09:51:47', '2017-04-28 09:51:47');
+INSERT INTO `handle_log` VALUES ('107', '1', 'index/upload', '0', '[]', '2017-04-28 09:52:18', '2017-04-28 09:52:18');
+INSERT INTO `handle_log` VALUES ('108', '1', 'rule/edit', '修改权限菜单[id:30]', '{\"data\":{\"parent_id\":\"21\",\"title\":\"\\u5546\\u54c1\\u89c4\\u683c\",\"name\":\"spec\\/index\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"1\",\"isadmin\":\"\",\"isverify\":\"1\"},\"id\":\"30\"}', '2017-04-28 16:22:32', '2017-04-28 16:22:32');
+INSERT INTO `handle_log` VALUES ('109', '1', 'rule/edit', '修改权限菜单[id:31]', '{\"data\":{\"parent_id\":\"30\",\"title\":\"\\u6dfb\\u52a0\\u89c4\\u683c\",\"name\":\"spec\\/add\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"\",\"isadmin\":\"\",\"isverify\":\"1\"},\"id\":\"31\"}', '2017-04-28 16:22:48', '2017-04-28 16:22:48');
+INSERT INTO `handle_log` VALUES ('110', '1', 'rule/edit', '修改权限菜单[id:32]', '{\"data\":{\"parent_id\":\"30\",\"title\":\"\\u4fee\\u6539\\u89c4\\u683c\",\"name\":\"spec\\/edit\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"\",\"isadmin\":\"\",\"isverify\":\"1\"},\"id\":\"32\"}', '2017-04-28 16:23:02', '2017-04-28 16:23:02');
+INSERT INTO `handle_log` VALUES ('111', '1', 'rule/edit', '修改权限菜单[id:33]', '{\"data\":{\"parent_id\":\"30\",\"title\":\"\\u89c4\\u683c\\u5220\\u9664\",\"name\":\"spec\\/destroy\",\"icon\":\"\",\"sort\":\"255\",\"islink\":\"1\",\"isadmin\":\"\",\"isverify\":\"1\"},\"id\":\"33\"}', '2017-04-28 16:23:16', '2017-04-28 16:23:16');
+INSERT INTO `handle_log` VALUES ('112', '1', 'spec/add', '添加商品模型[id:6]', '{\"data\":{\"name\":\"\\u5e74\\u4efd\",\"spec\":\"\\u4e09\\u5e74,\\u5341\\u5e74,\\u4e8c\\u5341\\u5e74\"}}', '2017-04-28 16:25:56', '2017-04-28 16:25:56');
+INSERT INTO `handle_log` VALUES ('113', '1', 'spec/edit', '修改商品模型[id:5]', '{\"data\":{\"name\":\"\\u957f\\u5ea6\",\"spec\":\"3M,5M,6M,10M\"},\"id\":\"5\"}', '2017-04-28 16:26:09', '2017-04-28 16:26:09');
+INSERT INTO `handle_log` VALUES ('114', '1', 'former/add', '添加商品模型[id:7]', '{\"data\":{\"name\":\"\\u6e4d\\u5728\\u5de5\",\"spec\":\"ddd,aaa\"}}', '2017-04-28 16:36:11', '2017-04-28 16:36:11');
+INSERT INTO `handle_log` VALUES ('115', '1', 'former/edit', '修改商品模型[id:7]', '{\"data\":{\"name\":\"\\u6e4d\\u5728\\u5de5\",\"spec\":\"ddd,aaa,asd\"},\"id\":\"7\"}', '2017-04-28 16:37:11', '2017-04-28 16:37:11');
+INSERT INTO `handle_log` VALUES ('116', '1', 'former/add', '添加商品模型[id:8]', '{\"data\":{\"name\":\"\\u4e0a\\u8863\\u6a21\\u578b\",\"spec\":{\"name\":[\"\\u989c\\u8272\",\"\\u5c3a\\u5bf8\"],\"spec\":[\"\\u767d\\u8272,\\u7ea2\\u8272,\\u7070\\u8272\",\"M\\u7801\"]}}}', '2017-04-28 17:08:32', '2017-04-28 17:08:32');
+INSERT INTO `handle_log` VALUES ('117', '1', 'former/destroy', '删除商品模型[id:8]', '{\"id\":\"8\"}', '2017-04-28 17:09:22', '2017-04-28 17:09:22');
+INSERT INTO `handle_log` VALUES ('118', '1', 'former/add', '添加商品模型[id:9]', '{\"data\":{\"name\":\"\\u4e0a\\u8863\\u6a21\\u578b\",\"spec\":{\"name\":[\"\\u989c\\u8272\",\"\\u5c3a\\u7801\"],\"spec\":[\"\\u7ea2\\u8272,\\u767d\\u8272,\\u9ed1\\u8272\",\"S\\u7801,M\\u7801\"]}}}', '2017-04-28 17:10:05', '2017-04-28 17:10:05');
+INSERT INTO `handle_log` VALUES ('119', '1', 'former/add', '添加商品模型[id:10]', '{\"data\":{\"name\":\"\\u4e0b\\u6a21\\u578b\",\"spec\":{\"name\":[\"\\u6210\\u54c1\",\"\\u6ed1\"],\"spec\":[\"\\u6ca1\\u5728,\\u5728,\\u4e2d\\u8f66\",\"\\u6e4d,\\u5728\"]}}}', '2017-04-28 17:11:49', '2017-04-28 17:11:49');
+INSERT INTO `handle_log` VALUES ('120', '1', 'former/add', '添加商品模型[id:11]', '{\"data\":{\"name\":\"\\u5954\\u5728\",\"spec\":{\"name\":[\"\\u9f99\\u9a91\",\"\\u9f99\\u9a912\"],\"spec\":[\"\\u593a,\\u5954,\\u5954\",\"\\u593a,\\u5954\"]}}}', '2017-04-28 17:13:17', '2017-04-28 17:13:17');
+INSERT INTO `handle_log` VALUES ('121', '1', 'former/add', '添加商品模型[id:13]', '{\"data\":{\"name\":\"\\u5954\\u5728\\u5728\",\"spec\":{\"name\":[\"\\u9f99\\u9a91\",\"\\u9f99\\u9a912\"],\"spec\":[\"\\u593a,\\u5954,\\u5954\",\"\\u593a,\\u5954\"]}}}', '2017-04-28 17:28:55', '2017-04-28 17:28:55');
+INSERT INTO `handle_log` VALUES ('122', '1', 'former/add', '添加商品模型[id:14]', '{\"data\":{\"name\":\"\\u4e0a\\u8863\\u6a21\\u578b\",\"spec\":{\"name\":[\"\\u989c\\u8272\",\"\\u5c3a\\u7801\"],\"spec\":[\"\\u7ea2\\u8272,\\u767d\\u8272,\\u84dd\\u8272\",\"M\\u7801,L\\u7801\"]}}}', '2017-04-28 17:31:40', '2017-04-28 17:31:40');
+INSERT INTO `handle_log` VALUES ('123', '1', 'former/add', '添加商品模型[id:15]', '{\"data\":{\"name\":\"\\u4e0a\\u8863\",\"spec\":{\"name\":[\"\\u5458\",\"\\u57fa\"],\"spec\":[\"\\u6e4d\\u6709\\u90a3,\\u7802\\u5ca9\",\"\\u641e,\\u5426\"]}}}', '2017-04-28 17:38:21', '2017-04-28 17:38:21');
 
 -- ----------------------------
 -- Table structure for role
@@ -323,7 +357,7 @@ CREATE TABLE `rule` (
   `modify_time` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rulename` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COMMENT='权限&菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COMMENT='权限&菜单表';
 
 -- ----------------------------
 -- Records of rule
@@ -357,11 +391,12 @@ INSERT INTO `rule` VALUES ('26', '22', 'goods/destroy', '删除商品', '0', '0'
 INSERT INTO `rule` VALUES ('27', '23', 'category/add', '添加分类', '0', '0', '', '255', '1', '3', '2017-04-22 10:21:23', '2017-04-22 10:21:23');
 INSERT INTO `rule` VALUES ('28', '23', 'category/edit', '修改分类', '0', '0', '', '255', '1', '3', '2017-04-22 10:21:46', '2017-04-22 10:21:46');
 INSERT INTO `rule` VALUES ('29', '23', 'category/destroy', '删除分类', '0', '0', '', '255', '1', '3', '2017-04-22 10:22:29', '2017-04-22 10:22:29');
-INSERT INTO `rule` VALUES ('30', '21', 'former/index', '商品模型', '1', '0', '', '255', '1', '2', '2017-04-22 10:24:13', '2017-04-22 10:24:13');
-INSERT INTO `rule` VALUES ('31', '30', 'former/add', '添加模型', '0', '0', '', '255', '1', '3', '2017-04-22 10:24:57', '2017-04-22 10:24:57');
-INSERT INTO `rule` VALUES ('32', '30', 'former/edit', '修改模型', '0', '0', '', '255', '1', '3', '2017-04-22 10:25:16', '2017-04-22 10:25:16');
-INSERT INTO `rule` VALUES ('33', '30', 'former/destroy', '模型删除', '1', '0', '', '255', '1', '3', '2017-04-22 11:29:00', '2017-04-22 11:29:00');
+INSERT INTO `rule` VALUES ('30', '21', 'former/index', '商品模型', '1', '0', '', '255', '1', '2', '2017-04-22 10:24:13', '2017-04-28 16:22:32');
+INSERT INTO `rule` VALUES ('31', '30', 'former/add', '添加模型', '0', '0', '', '255', '1', '3', '2017-04-22 10:24:57', '2017-04-28 16:22:48');
+INSERT INTO `rule` VALUES ('32', '30', 'former/edit', '修改模型', '0', '0', '', '255', '1', '3', '2017-04-22 10:25:16', '2017-04-28 16:23:02');
+INSERT INTO `rule` VALUES ('33', '30', 'former/destroy', '模型删除', '1', '0', '', '255', '1', '3', '2017-04-22 11:29:00', '2017-04-28 16:23:16');
 INSERT INTO `rule` VALUES ('34', '20', 'system/add', '添加导航', '0', '0', '', '255', '1', '3', '2017-04-22 15:57:34', '2017-04-22 15:57:34');
+INSERT INTO `rule` VALUES ('35', '3', 'index/upload', '文件上传', '0', '0', '', '255', '1', '2', '2017-04-27 16:02:59', '2017-04-27 16:02:59');
 
 -- ----------------------------
 -- Table structure for user
@@ -387,7 +422,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin@admin.com', 'fcea920f7412b5da7be0cf42b8c93759', '0', '0', '超管', '18526232020', '1', '127.0.0.1', '2017-04-22 10:12:10', '2017-03-22 10:35:17', '2017-04-22 10:12:10');
+INSERT INTO `user` VALUES ('1', 'admin@admin.com', 'fcea920f7412b5da7be0cf42b8c93759', '0', '0', '超管', '18526232020', '1', '127.0.0.1', '2017-04-28 09:18:16', '2017-03-22 10:35:17', '2017-04-28 09:18:16');
 INSERT INTO `user` VALUES ('2', 'canglaoshi@admin.com', '670b14728ad9902aecba32e22fa4f6bd', '2', '0', '仓井空仓井空仓井空', null, '1', null, null, '2017-04-06 12:03:12', '2017-04-22 15:54:58');
 INSERT INTO `user` VALUES ('3', 'xixi@admin.com', 'e10adc3949ba59abbe56e057f20f883e', '2', '0', '纱纱相', null, '1', null, null, '2017-04-06 17:20:17', '2017-04-06 17:30:52');
 INSERT INTO `user` VALUES ('4', 'sb112@admin.com', '4297f44b13955235245b2497399d7a93', '3', '0', '黄育佳', null, '1', null, null, '2017-04-14 15:07:47', '2017-04-14 15:08:11');

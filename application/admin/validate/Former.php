@@ -8,7 +8,7 @@ class Former extends Validate
 
     protected $rule = [
         'name|模型名称' => ['require', 'chs', 'length:2,5'],
-        'spec|模型规格' => ['require', 'chsAlphaNumComma', 'length:2,200'],
+        'spec|规格规格' => ['require', 'array'],
     ];
 
     protected $scene = [
